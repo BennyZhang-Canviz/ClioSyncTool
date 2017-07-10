@@ -1,0 +1,83 @@
+﻿@model IEnumerable<ClioTasks.Models.ClioTask>
+@{
+    ViewBag.Title = "Index";
+}
+<style>
+    .outlook {
+        background-color: #f3f3f3;
+    }
+
+    .clio {
+        background-color: #f3f3f3;
+    }
+</style>
+<h2>Clio Tasks</h2>
+@using (Html.BeginForm())
+{
+    <div>Last sync date(example: 2017/7/7 2:38:44):</div>
+    <input type="text" name="lastSyncDate" id="lastSyncDate" value="@TempData["lastSyncDate"]" />
+    <input type="submit" value="Filter" />
+}
+<br />
+<table class="table">
+    <tr>
+        <th>
+           Clio Subject
+        </th>
+        <th>Created</th>
+        <th>Modified</th>
+        <th>
+            Outlook Subject 
+        </th>
+        <th>Created</th>
+        <th>Modified</th>
+        <th>Compare</th>
+        <th>Check Result</th>
+        <th>Delete</th>
+    </tr>
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td>
+                @Html.ActionLink(item.name, "Detail", "ClioTasks", new { Id = item.id }, new { @class = "ui-btn-right", data_icon = "gear" })
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.created_at)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.updated_at)
+            </td>
+            <td class="outlook">
+                @if (item.OutlookTask != null)
+                {
+                    <div>@item.OutlookTask.Subject</div>
+                }
+            </td>
+            <td class="outlook">
+                @if (item.OutlookTask != null)
+                {
+                    <div>@item.OutlookTask.CreatedDateTime</div>
+                }
+            </td>
+            <td class="outlook">
+                @if (item.OutlookTask != null)
+                {
+                    <div>@item.OutlookTask.LastModifiedDateTime</div>
+                }
+            </td>
+            <td >
+                @if (item.OutlookTask != null)
+                {
+                    @Html.ActionLink("Compare", "Compare", "Home", new { outlookId = item.OutlookTask.Id, clioId = item.id }, new { @class = "ui-btn-right", data_icon = "gear" ,target="blank"})
+                }
+
+            </td>
+            <td>
+                @Html.Raw(item.SyncCheckResult)
+            </td>
+            <td>
+                @Html.ActionLink("Delete", "DeleteTask", "ClioTasks", new { Id = item.id }, new { @class = "ui-btn-right", data_icon = "gear" , onclick = "return confirm('Are you sure you wish to delete this item?');" })
+            </td>
+        </tr>
+    }
+</table>

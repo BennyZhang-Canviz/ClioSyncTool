@@ -1,0 +1,63 @@
+﻿@model ClioTasks.Models.CompoundModel
+
+@{
+    ViewBag.Title = "Compare";
+
+}
+<style>
+    .warning{color:red;}
+</style>
+
+<h2>Compare</h2>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>#</th>
+            <th>Outlook Task</th>
+            <th>Clio Task</th>           
+        </tr>
+    </thead>
+    <tbody>
+        <tr class="@Utility.StringsHelper.GetColor(Model.OutlookTaskModel.Subject.ToLower(),Model.ClioTask.name.ToLower())">
+            <th scope="row">Subject</th>
+            <td >@Model.OutlookTaskModel.Subject</td>
+            <td>@Model.ClioTask.name</td>      
+        </tr>
+        <tr >
+            <th scope="row">Start date</th>
+            <td>@Model.OutlookTaskModel.StartDateTime.DateTime</td>
+            <td>@Model.ClioTask.created_at</td>           
+        </tr>
+        <tr>
+            <th scope="row">Due date</th>
+            <td>@Model.OutlookTaskModel.DueDateTime.DateTime</td>
+            <td>@Model.ClioTask.due_at</td>
+        </tr>
+        <tr>
+            <th scope="row">Status</th>
+            <td>@Model.OutlookTaskModel.Status</td>
+            <td>@Model.ClioTask.status</td>
+        </tr>
+        <tr  class="@Utility.StringsHelper.GetColor(Model.OutlookTaskModel.Importance.ToLower(),Model.ClioTask.priority.ToLower())">
+            <th scope="row">Priority</th>
+            <td>@Model.OutlookTaskModel.Importance</td>
+            <td>@Model.ClioTask.priority</td>
+        </tr>
+
+      
+        <tr >
+            <th scope="row">Description</th>
+            <td> @Html.Raw(Model.OutlookTaskModel.Body.Content)</td>
+            <td>@Model.ClioTask.description</td>
+        </tr>
+
+        
+    </tbody>
+</table>
+
+@*<tr class="@Utility.StringHelper.GetColor(Model.OutlookTaskModel.Subject,Model.ClioTask.name)">
+    <th scope="row"></th>
+    <td>@Model.OutlookTaskModel</td>
+    <td>@Model.ClioTask</td>
+</tr>*@

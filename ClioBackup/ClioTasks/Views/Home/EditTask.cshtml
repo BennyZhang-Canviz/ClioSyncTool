@@ -1,0 +1,65 @@
+﻿@model ClioTasks.Models.OutlookTaskModel
+@{
+    ViewBag.Title = "EditTask";
+}
+
+
+<h2>Edit</h2>
+@using (Html.BeginForm())
+{
+    
+    <div class="form-horizontal">
+        <h4>Movie</h4>
+        <hr />
+        @Html.ValidationSummary(true)
+        @Html.HiddenFor(model => model.Id)
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.Subject, new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.Subject)
+                @Html.ValidationMessageFor(model => model.Subject)
+            </div>
+        </div>
+        <div class="form-group">
+            @Html.LabelFor(model => model.DueDateTime, new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.DueDateTime.DateTime)
+                @Html.ValidationMessageFor(model => model.DueDateTime.DateTime)
+            </div>
+        </div>
+        <div class="form-group">
+            
+            <label class="control-label col-md-2" for="DueDateTime">Custom propertity</label>
+            <div class="col-md-10">
+                @*<input id="customPropertityValue" name="customPropertityValue"  value=""/>*@
+                @*@if (Model.SingleValueExtendedProperties != null && Model.SingleValueExtendedProperties.Count > 0)
+                {
+                    @Html.EditorFor(model => model.SingleValueExtendedProperties[0].Value)
+                }
+                else{
+                      @Html.EditorFor(model => model.SingleValueExtendedProperties[0].Value)
+                }*@
+                @Html.EditorFor(model => model.SingleValueExtendedProperties[0].Value)
+                <br/>
+                <div>
+                    In this example we assume the custom propertity is ClioTaskId.
+                    "SingleValueExtendedProperties": [
+                    {
+                    "PropertyId": "String {0f8fad5b-d9cb-469f-a165-70867728950e(this guid can be setting in web.config)} Name ClioTaskId",
+                    "Value": "123"
+                    }
+                    ]
+                </div>
+            </div>
+        </div>
+
+
+        @*Genre and Price removed for brevity.*@
+        <div class="form-group">
+            <div class="col-md-offset-2 col-md-10">
+                <input type="submit" value="Save" class="btn btn-default" />
+            </div>
+        </div>
+    </div>
+}
